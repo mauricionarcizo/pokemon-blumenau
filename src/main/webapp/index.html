@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="PokemonBlumenauApp">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="./angular-resource.min.js"></script>
+    <script>
+        var app = angular.module('PokemonBlumenauApp', ['ngResource']);
+        app.controller('PokemonBlumenauController', PokemonBlumenauController);
+
+        app.factory('PokemonService', function ($resource) {
+            return $resource('http://localhost:8080/hello');
+        })
+
+        function PokemonBlumenauController($injector) {
+            var vm = this;
+            var PokemonService =$injector.get('PokemonService');
+            PokemonService.get({
+                lastId: 0
+            })
+            .$promise
+            .then(function(data){
+                vm.data = data;
+                console.log(data)
+            })
+        }
+    </script>
+</head>
+
+<body data-ng-controller="PokemonBlumenauController as vm">
+    {{vm.data.length}}
+</body>
+
+</html>
