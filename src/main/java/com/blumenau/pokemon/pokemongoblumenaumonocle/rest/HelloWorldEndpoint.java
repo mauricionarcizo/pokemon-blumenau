@@ -15,6 +15,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
@@ -38,19 +40,29 @@ public class HelloWorldEndpoint {
             String json = EntityUtils.toString(result.getEntity(), "UTF-8");
 
             com.google.gson.Gson gson = new com.google.gson.Gson();
-            Response respuesta = gson.fromJson(json, Response.class);
+            List<Pokemon> pokemons = gson.fromJson(json, ArrayList.class);
 
-            System.out.println(respuesta.getExample());
-            System.out.println(respuesta.getFr());
-
+            return Response.ok(pokemons).build();
         } catch (Exception ex) {
 			throw ex;
         }
-		return Response.ok(response).build();
-	}
-
-	public class Response{
-
-        
+        // return Response.ok("{}").build();
+    }
+    
+    public static class Pokemon{
+        public long expires_at;
+        public String id;
+        public long lat;
+        public long lon;
+        public String name;
+        public long pokemon_id;
+        public boolean trash;
+        public long atk;
+        public long damage1;
+        public long damage2;
+        public long def;
+        public String move1;
+        public String move2;
+        public long sta;
     }
 }

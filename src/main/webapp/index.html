@@ -2,36 +2,103 @@
 <html lang="en" data-ng-app="PokemonBlumenauApp">
 
 <head>
-    <title></title>
+    <title>dsadsads</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
     <script src="./angular-resource.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script>
         var app = angular.module('PokemonBlumenauApp', ['ngResource']);
         app.controller('PokemonBlumenauController', PokemonBlumenauController);
 
         app.factory('PokemonService', function ($resource) {
-            return $resource('http://localhost:8080/hello');
+            return $resource('http://localhost:8080/rest/hello');
         })
 
         function PokemonBlumenauController($injector) {
             var vm = this;
-            var PokemonService =$injector.get('PokemonService');
-            PokemonService.get({
-                lastId: 0
-            })
-            .$promise
-            .then(function(data){
-                vm.data = data;
-                console.log(data)
-            })
+            var PokemonService = $injector.get('PokemonService');
+            var $interval = $injector.get('$interval');
+            var lastId = 0;
+            loadPokemon();
+
+            $interval(function () {
+                loadPokemon()
+            }, 60000);
+
+            function loadPokemon() {
+
+                PokemonService.query({
+                        lastId: lastId
+                    })
+                    .$promise
+                    .then(function (data) {
+                        angular.forEach(data, function (pokemon) {
+                            var atk = pokemon.atk || 0;
+                            var def = pokemon.def || 0;
+                            var sta = pokemon.sta || 0;
+                            pokemon.iv = (atk + def + sta) * 100 / 45;
+                        });
+                        vm.data = data.filter(function (pokemon) {
+                            return pokemon.iv > 80;
+                        });
+                        angular.forEach(vm.data, function (pokemon) {
+                            pokemon.expires_formated = calculateRemainingTime(pokemon.expires_at);
+                        });
+                        // lastId = data[data.length -1].id.split('-')[1];
+                    });
+            }
+
+            function calculateRemainingTime(expire_at_timestamp) {
+                var diff = (expire_at_timestamp - new Date().getTime() / 1000);
+                var minutes = parseInt(diff / 60);
+                var seconds = parseInt(diff - (minutes * 60));
+                return minutes + ':' + (seconds > 9 ? "" + seconds : "0" + seconds);
+            }
         }
     </script>
 </head>
 
 <body data-ng-controller="PokemonBlumenauController as vm">
-    {{vm.data.length}}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered table-hover table-stripped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>IV</th>
+                            <th>Expira em</th>
+                            <th>Localizacao</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="pokemon in vm.data | orderBy:'-iv'">
+                            <td>{{pokemon.name}}</td>
+                            <td>{{pokemon.iv | number}}</td>
+                            <td>{{pokemon.expires_formated}}</td>
+                            <td><a class="btn btn-primary btn-clean" href="https://www.google.com/maps/?daddr={{pokemon.lat}},{{pokemon.lon}}"
+                                    target="_blank">Obter localizacao</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
