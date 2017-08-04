@@ -30,7 +30,7 @@
         })
 
         app.factory('GoogleMapsAddressService', function ($resource) {
-            return $resource('http://maps.googleapis.com/maps/api/geocode/json');
+            return $resource('https://maps.googleapis.com/maps/api/geocode/json');
         })
 
         function PokemonBlumenauController($injector) {
@@ -38,6 +38,7 @@
             var PokemonService = $injector.get('PokemonService');
             var GoogleMapsAddressService = $injector.get('GoogleMapsAddressService');
             var $interval = $injector.get('$interval');
+            var $timeout = $injector.get('$timeout');
             var lastId = 0;
             loadPokemon();
 
@@ -61,19 +62,44 @@
                         vm.data = data.filter(function (pokemon) {
                             return pokemon.iv > 80;
                         });
+
                         angular.forEach(vm.data, function (pokemon) {
-                            loadAddress(pokemon);
+                            // setTimeout(function () {
+                            //     console.log('loading');
+                            //     loadAddress(pokemon);
+                            // }, 1000);
+                            pokemon.address = 'Carregando localização';
                             pokemon.expires_formated = calculateRemainingTime(pokemon.expires_at);
                         });
+                        loadPokemonAddress(vm.data, 0);
                         // lastId = data[data.length -1].id.split('-')[1];
                     });
             }
 
+            function loadPokemonAddress(pokemonList, index) {
+                console.log(index)
+                loadAddress(pokemonList[index])
+                    .then(function () {
+                        if (index + 1 < pokemonList.length) {
+                            $timeout(function () {
+                                loadPokemonAddress(pokemonList, index+1);
+                            }, 500);
+                        }
+                    });
+            }
+
             function loadAddress(pokemon) {
-                return GoogleMapsAddressService.get({ latlng: pokemon.lat + ',' + pokemon.lon })
-                .$promise.then(function(addresses){
-                    pokemon.address = addresses.results[0].formatted_address;
-                });
+                return GoogleMapsAddressService.get({ latlng: pokemon.lat + ',' + pokemon.lon, key: 'AIzaSyBhArMPqNkrs1kz2k18h5e3rbtGTo9QbsI' })
+                    .$promise.then(function (addresses) {
+                        if (addresses.results[0]) {
+                            pokemon.address = addresses.results[0].formatted_address;
+                        } else {
+                            pokemon.address = 'Não foi possível obter a localização.';
+                        }
+                    })
+                    .catch(function () {
+                        pokemon.address = 'Não foi possível obter a localização.';
+                    });
             }
 
             function calculateRemainingTime(expire_at_timestamp) {
