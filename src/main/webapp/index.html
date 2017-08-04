@@ -64,10 +64,6 @@
                         });
 
                         angular.forEach(vm.data, function (pokemon) {
-                            // setTimeout(function () {
-                            //     console.log('loading');
-                            //     loadAddress(pokemon);
-                            // }, 1000);
                             pokemon.address = 'Carregando localização';
                             pokemon.expires_formated = calculateRemainingTime(pokemon.expires_at);
                         });
@@ -77,7 +73,6 @@
             }
 
             function loadPokemonAddress(pokemonList, index) {
-                console.log(index)
                 loadAddress(pokemonList[index])
                     .then(function () {
                         if (index + 1 < pokemonList.length) {
