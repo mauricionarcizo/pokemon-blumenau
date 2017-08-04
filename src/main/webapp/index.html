@@ -125,8 +125,7 @@
                     <tbody>
                         <tr data-ng-repeat="pokemon in vm.data | orderBy:'-iv'">
                             <td><img class="leaflet-marker-icon" data-ng-src="/img/{{pokemon.pokemon_id}}.png"></td>
-                            <td>{{pokemon.name}}</td>
-                            <td>{{pokemon.iv | number}}</td>
+                            <td>{{pokemon.name}} - {{pokemon.iv | number:2}}%</td>
                             <td>{{pokemon.expires_formated}}</td>
                             <td>{{pokemon.address}}</td>
                             <td><a class="btn btn-primary btn-clean" href="https://www.google.com/maps/?daddr={{pokemon.lat}},{{pokemon.lon}}"
