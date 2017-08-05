@@ -1,25 +1,27 @@
 (function () {
-    var app = angular.module('PokemonBlumenauApp', ['ngResource', 'timer']);
+    var app = angular.module('PokemonBlumenauApp', ['ngResource', 'timer', 'ngTable']);
     app.controller('PokemonBlumenauController', PokemonBlumenauController);
 
     app.factory('PokemonService', function ($resource) {
-        return $resource('/rest/hello');
+        return $resource('http://localhost:8080/rest/hello');
     })
 
     app.factory('GoogleMapsAddressService', function ($resource) {
         return $resource('https://maps.googleapis.com/maps/api/geocode/json');
     })
 
-    function PokemonBlumenauController($injector, $scope) {
+    function PokemonBlumenauController($injector) {
         var vm = this;
         var PokemonService = $injector.get('PokemonService');
         var GoogleMapsAddressService = $injector.get('GoogleMapsAddressService');
+        var NgTableParams = $injector.get('NgTableParams');
         var $interval = $injector.get('$interval');
         var $timeout = $injector.get('$timeout');
         var lastId = 0;
         vm.listPokemon = [];
         vm.endTimePokemon = endTimePokemon;
 
+        createTableParams();
         loadPokemon();
 
         $interval(function () {
@@ -50,7 +52,12 @@
                     });
                     loadPokemonAddress(newList, 0);
                     lastId = data[data.length - 1].id.split('-')[1];
+                    createTableParams();
                 });
+        }
+
+        function createTableParams() {
+            vm.tableParams = new NgTableParams({ count: 100, sorting: { iv: "desc" } }, { counts: [], dataset: vm.listPokemon });
         }
 
         function loadPokemonAddress(pokemonList, index) {
@@ -89,6 +96,7 @@
 
         function endTimePokemon(pokemon, index) {
             vm.listPokemon = vm.listPokemon.filter(function (poke) { return poke.id != pokemon.id });
+            createTableParams();
         }
     }
 })();
