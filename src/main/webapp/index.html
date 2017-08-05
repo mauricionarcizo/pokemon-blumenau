@@ -40,30 +40,30 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <table class="table table-bordered table-hover table-stripped table-condensed">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Nome</th>
-                            <th>Expira em</th>
-                            <th>Endereço</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr data-ng-repeat="pokemon in vm.listPokemon | orderBy:'-iv'">
-                            <td><img class="leaflet-marker-icon" data-ng-src="./img/{{pokemon.pokemon_id}}.png"></td>
-                            <td>{{pokemon.name}} - {{pokemon.iv | number:2}}%</td>
-                            <td>
-                                <timer data-ng-click="vm.endTimePokemon(pokemon, $index)" interval="1000" countdown="pokemon.timer" finish-callback="vm.endTimePokemon(pokemon, $index)">{{mminutes}}:{{sseconds}}</timer>
-                            </td>
-                            <td>
-                                <a class="btn btn-link" href="https://www.google.com/maps/?daddr={{pokemon.lat}},{{pokemon.lon}}" target="_blank">{{pokemon.address}}</a></td>
-                            </td>
-                            <td>
-
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Nome</th>
+                                <th>Expira em</th>
+                                <th>Endereço</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="pokemon in vm.listPokemon | orderBy:'-iv'">
+                                <td><img class="leaflet-marker-icon" data-ng-src="./img/{{pokemon.pokemon_id}}.png"></td>
+                                <td>{{pokemon.name}} - {{pokemon.iv | number:2}}%</td>
+                                <td>
+                                    <timer data-ng-click="vm.endTimePokemon(pokemon, $index)" interval="1000" countdown="pokemon.timer" finish-callback="vm.endTimePokemon(pokemon, $index)">{{mminutes}}:{{sseconds}}</timer>
+                                </td>
+                                <td>
+                                    <a class="btn btn-link" href="https://www.google.com/maps/?daddr={{pokemon.lat}},{{pokemon.lon}}" target="_blank">{{pokemon.address}}</a></td>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
