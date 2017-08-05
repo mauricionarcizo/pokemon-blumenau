@@ -3,7 +3,7 @@
     app.controller('PokemonBlumenauController', PokemonBlumenauController);
 
     app.factory('PokemonService', function ($resource) {
-        return $resource('http://localhost:8080/rest/hello');
+        return $resource('/rest/hello');
     })
 
     app.factory('GoogleMapsAddressService', function ($resource) {

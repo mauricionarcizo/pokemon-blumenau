@@ -2,7 +2,7 @@
 <html lang="en" data-ng-app="PokemonBlumenauApp">
 
 <head>
-    <title>dsadsads</title>
+    <title>Pokemon Blumenau</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
@@ -47,7 +47,6 @@
                             <th>Nome</th>
                             <th>Expira em</th>
                             <th>Endereço</th>
-                            <th>Localizacao</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,9 +56,11 @@
                             <td>
                                 <timer data-ng-click="vm.endTimePokemon(pokemon, $index)" interval="1000" countdown="pokemon.timer" finish-callback="vm.endTimePokemon(pokemon, $index)">{{mminutes}}:{{sseconds}}</timer>
                             </td>
-                            <td>{{pokemon.address}}</td>
-                            <td><a class="btn btn-primary btn-clean" href="https://www.google.com/maps/?daddr={{pokemon.lat}},{{pokemon.lon}}"
-                                    target="_blank">Obter localizacao</a></td>
+                            <td>
+                                <a class="btn btn-link" href="https://www.google.com/maps/?daddr={{pokemon.lat}},{{pokemon.lon}}" target="_blank">{{pokemon.address}}</a></td>
+                            </td>
+                            <td>
+
                         </tr>
                     </tbody>
                 </table>
