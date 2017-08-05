@@ -22,89 +22,18 @@
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script>
-        var app = angular.module('PokemonBlumenauApp', ['ngResource']);
-        app.controller('PokemonBlumenauController', PokemonBlumenauController);
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-        app.factory('PokemonService', function ($resource) {
-            return $resource('/rest/hello');
-        })
-
-        app.factory('GoogleMapsAddressService', function ($resource) {
-            return $resource('https://maps.googleapis.com/maps/api/geocode/json');
-        })
-
-        function PokemonBlumenauController($injector) {
-            var vm = this;
-            var PokemonService = $injector.get('PokemonService');
-            var GoogleMapsAddressService = $injector.get('GoogleMapsAddressService');
-            var $interval = $injector.get('$interval');
-            var $timeout = $injector.get('$timeout');
-            var lastId = 0;
-            loadPokemon();
-
-            $interval(function () {
-                loadPokemon()
-            }, 60000);
-
-            function loadPokemon() {
-
-                PokemonService.query({
-                    lastId: lastId
-                })
-                    .$promise
-                    .then(function (data) {
-                        angular.forEach(data, function (pokemon) {
-                            var atk = pokemon.atk || 0;
-                            var def = pokemon.def || 0;
-                            var sta = pokemon.sta || 0;
-                            pokemon.iv = (atk + def + sta) * 100 / 45;
-                        });
-                        vm.data = data.filter(function (pokemon) {
-                            return pokemon.iv > 80;
-                        });
-
-                        angular.forEach(vm.data, function (pokemon) {
-                            pokemon.address = 'Carregando localização';
-                            pokemon.expires_formated = calculateRemainingTime(pokemon.expires_at);
-                        });
-                        loadPokemonAddress(vm.data, 0);
-                        // lastId = data[data.length -1].id.split('-')[1];
-                    });
-            }
-
-            function loadPokemonAddress(pokemonList, index) {
-                loadAddress(pokemonList[index])
-                    .then(function () {
-                        if (index + 1 < pokemonList.length) {
-                            $timeout(function () {
-                                loadPokemonAddress(pokemonList, index+1);
-                            }, 500);
-                        }
-                    });
-            }
-
-            function loadAddress(pokemon) {
-                return GoogleMapsAddressService.get({ latlng: pokemon.lat + ',' + pokemon.lon, key: 'AIzaSyBhArMPqNkrs1kz2k18h5e3rbtGTo9QbsI' })
-                    .$promise.then(function (addresses) {
-                        if (addresses.results[0]) {
-                            pokemon.address = addresses.results[0].formatted_address;
-                        } else {
-                            pokemon.address = 'Não foi possível obter a localização.';
-                        }
-                    })
-                    .catch(function () {
-                        pokemon.address = 'Não foi possível obter a localização.';
-                    });
-            }
-
-            function calculateRemainingTime(expire_at_timestamp) {
-                var diff = (expire_at_timestamp - new Date().getTime() / 1000);
-                var minutes = parseInt(diff / 60);
-                var seconds = parseInt(diff - (minutes * 60));
-                return minutes + ':' + (seconds > 9 ? "" + seconds : "0" + seconds);
-            }
-        }
+        ga('create', 'UA-104114787-1', 'auto');
+        ga('send', 'pageview');
     </script>
+    <script src="./angular-timer-all.min.js"></script>
+    <script src="./app.js"></script>
 </head>
 
 <body data-ng-controller="PokemonBlumenauController as vm">
@@ -116,17 +45,18 @@
                         <tr>
                             <th></th>
                             <th>Nome</th>
-                            <th>IV</th>
                             <th>Expira em</th>
                             <th>Endereço</th>
                             <th>Localizacao</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr data-ng-repeat="pokemon in vm.data | orderBy:'-iv'">
-                            <td><img class="leaflet-marker-icon" data-ng-src="/img/{{pokemon.pokemon_id}}.png"></td>
+                        <tr data-ng-repeat="pokemon in vm.listPokemon | orderBy:'-iv'">
+                            <td><img class="leaflet-marker-icon" data-ng-src="./img/{{pokemon.pokemon_id}}.png"></td>
                             <td>{{pokemon.name}} - {{pokemon.iv | number:2}}%</td>
-                            <td>{{pokemon.expires_formated}}</td>
+                            <td>
+                                <timer data-ng-click="vm.endTimePokemon(pokemon, $index)" interval="1000" countdown="pokemon.timer" finish-callback="vm.endTimePokemon(pokemon, $index)">{{mminutes}}:{{sseconds}}</timer>
+                            </td>
                             <td>{{pokemon.address}}</td>
                             <td><a class="btn btn-primary btn-clean" href="https://www.google.com/maps/?daddr={{pokemon.lat}},{{pokemon.lon}}"
                                     target="_blank">Obter localizacao</a></td>

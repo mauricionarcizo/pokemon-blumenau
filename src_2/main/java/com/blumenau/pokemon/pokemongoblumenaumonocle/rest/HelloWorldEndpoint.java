@@ -27,9 +27,10 @@ import javax.ws.rs.QueryParam;
 
 
 @Path("/hello")
+@Stateless
 public class HelloWorldEndpoint {
 	private String urlServer = "http://158.69.250.59:5555/data";
-    // private String urlGoogleMapsAddress = "http://maps.googleapis.com/maps/api/geocode/json";
+    private String urlGoogleMapsAddress = "http://maps.googleapis.com/maps/api/geocode/json";
     // http://maps.googleapis.com/maps/api/geocode/json?latlng=-26.867082,-49.103068&sensor=true get address by lat long
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -51,24 +52,24 @@ public class HelloWorldEndpoint {
         
     }
 
-    // private String getAddressFromLatLon(long lat, long lon){
-    //     System.out.println("address");
-    //     urlGoogleMapsAddress += "?latlng=" + lat+','+lon;
-	// 	try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
-    //         HttpGet request = new HttpGet(urlGoogleMapsAddress);
-    //         request.addHeader("content-type", "application/json");
-    //         HttpResponse result = httpClient.execute(request);
-    //         String json = EntityUtils.toString(result.getEntity(), "UTF-8");
+    private String getAddressFromLatLon(long lat, long lon){
+        System.out.println("address");
+        urlGoogleMapsAddress += "?latlng=" + lat+','+lon;
+		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
+            HttpGet request = new HttpGet(urlGoogleMapsAddress);
+            request.addHeader("content-type", "application/json");
+            HttpResponse result = httpClient.execute(request);
+            String json = EntityUtils.toString(result.getEntity(), "UTF-8");
 
-    //         com.google.gson.Gson gson = new com.google.gson.Gson();
-    //         GoogleMapsAddress address = gson.fromJson(json, GoogleMapsAddress.class);
-    //         Results rs = address.results.get(0);
-    //         return rs.formatted_address;
-    //     } catch (Exception ex) {
-	// 		ex.printStackTrace();
-    //         return "";
-    //     }
-    // }
+            com.google.gson.Gson gson = new com.google.gson.Gson();
+            GoogleMapsAddress address = gson.fromJson(json, GoogleMapsAddress.class);
+            Results rs = address.results.get(0);
+            return rs.formatted_address;
+        } catch (Exception ex) {
+			ex.printStackTrace();
+            return "";
+        }
+    }
 
     public static class GoogleMapsAddress{
         public List<Results> results;
