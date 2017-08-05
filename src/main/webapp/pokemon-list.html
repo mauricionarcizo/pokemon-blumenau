@@ -1,0 +1,18 @@
+<div class="table-responsive">
+    <table data-ng-table="vm.tableParams" show-filter="true" class="table table-bordered table-hover table-striped table-condensed">
+        <tr data-ng-repeat="pokemon in $data">
+            <td><img class="leaflet-marker-icon" data-ng-src="./img/{{pokemon.pokemon_id}}.png"></td>
+            <td title="'Nome'" sortable="'name'">
+                {{pokemon.name}}
+            </td>
+            <td title="'Expira em'">
+                <timer data-ng-click="vm.endTimePokemon(pokemon, $index)" interval="5000" countdown="pokemon.timer" finish-callback="vm.endTimePokemon(pokemon, $index)">{{mminutes}}:{{sseconds}}</timer>
+            </td>
+            <td title="'IV'" sortable="'iv'">
+                {{pokemon.iv | number:2}}%</td>
+            <td title="'Endereço'" filter="{ address: 'text'}" sortable="'address'">
+                <a class="btn btn-link" href="https://www.google.com/maps/?daddr={{pokemon.lat}},{{pokemon.lon}}" target="_blank">{{pokemon.address}}</a></td>
+            </td>
+        </tr>
+    </table>
+</div>

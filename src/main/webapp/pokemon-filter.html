@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-lg-5 col-md-7 col-sm-10 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading"><input type="text" data-ng-model="filterPokemon" name="filterPokemon" placeholder="Pesquisar pokemon" class="form-control"></div>
+            <div class="panel-body" style="max-height: 800px; overflow-y: auto;">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <a class="btn btn-link">Habilitar todos</a>|<a class="btn btn-link">Desabilitar todos</a>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-5">
+                                <div class="form-group">
+                                    <input type="number" class="form-control input-sm" id="ivMin" placeholder="IV mínimo">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
+                                <a class="btn btn-link">Aplicar a todos</a>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style=" border-bottom: 1px #dcd7d7 solid; margin-bottom: 10px;">
+                    <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    </div>
+                </div>
+                <div data-ng-repeat="pokemon in vm.listPokemon | filter: filterPokemon" class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <div class="checkbox pull-right">
+                            <label>
+                                <input type="checkbox" data-ng-model="pokemon.show">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <img class="pull-left" data-ng-src="./img/{{pokemon.id}}.png">
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="sr-only" for="ivMin">IV mínimo para todos</label>
+                            <input type="number" data-ng-model="pokemon.ivMin" class="form-control input-sm" id="ivMin" placeholder="IV mínimo">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-2 col-xs-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
