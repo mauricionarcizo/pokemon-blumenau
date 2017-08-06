@@ -49,7 +49,9 @@
                         pokemon.address = 'Carregando localização';
                         pokemon.timer = pokemon.expires_at - new Date().getTime() / 1000;
                     });
-                    loadPokemonAddress(newList, 0);
+                    if(newList.length){
+                        loadPokemonAddress(newList, 0);
+                    }
                     lastId = data[data.length - 1].id.split('-')[1];
                     createTableParams();
                 });

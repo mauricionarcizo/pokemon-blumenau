@@ -6,7 +6,7 @@
                 {{pokemon.name}}
             </td>
             <td title="'Expira em'">
-                <timer data-ng-click="vm.endTimePokemon(pokemon, $index)" interval="5000" countdown="pokemon.timer" finish-callback="vm.endTimePokemon(pokemon, $index)">{{mminutes}}:{{sseconds}}</timer>
+                <timer data-ng-click="vm.endTimePokemon(pokemon, $index)" interval="1000" countdown="pokemon.timer" finish-callback="vm.endTimePokemon(pokemon, $index)">{{mminutes}}:{{sseconds}}</timer>
             </td>
             <td title="'IV'" sortable="'iv'">
                 {{pokemon.iv | number:2}}%</td>
