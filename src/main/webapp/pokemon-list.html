@@ -1,18 +1,43 @@
-<div class="table-responsive">
-    <table data-ng-table="vm.tableParams" show-filter="true" class="table table-bordered table-hover table-striped table-condensed">
-        <tr data-ng-repeat="pokemon in $data">
-            <td><img class="leaflet-marker-icon" data-ng-src="./img/{{pokemon.pokemon_id}}.png"></td>
-            <td title="'Nome'" sortable="'name'">
-                {{pokemon.name}}
-            </td>
-            <td title="'Expira em'">
-                <timer data-ng-click="vm.endTimePokemon(pokemon, $index)" interval="1000" countdown="pokemon.timer" finish-callback="vm.endTimePokemon(pokemon, $index)">{{mminutes}}:{{sseconds}}</timer>
-            </td>
-            <td title="'IV'" sortable="'iv'">
-                {{pokemon.iv | number:2}}%</td>
-            <td title="'Endereço'" filter="{ address: 'text'}" sortable="'address'">
-                <a class="btn btn-link" href="https://www.google.com/maps/?daddr={{pokemon.lat}},{{pokemon.lon}}" target="_blank">{{pokemon.address}}</a></td>
-            </td>
-        </tr>
-    </table>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <p>Próxima atualização em:
+            <timer-countdown data-ng-if="!vm.isLoading" end-time="vm.nextUpdate" on-finish="vm.updateListPokemon()"></timer-countdown>
+        </p>
+    </div>
+    <div class="panel-body">
+        <div class="row" data-ng-if="vm.isLoading">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <uib-progressbar class="progress-striped active" animate="true" value="dynamic">Atualizando lista de pokemon...</uib-progressbar>
+            </div>
+        </div>
+        <div class="row" data-ng-if="vm.error">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="well well-sm">{{vm.error}}</div>
+            </div>
+        </div>
+        <div class="row" data-ng-if="!vm.error">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="table-responsive">
+                    <table data-ng-table="vm.tableParams" show-filter="true" class="table table-bordered table-hover table-striped table-condensed">
+                        <tr data-ng-repeat="pokemon in $data">
+                            <td><img class="leaflet-marker-icon" data-ng-src="./img/{{pokemon.pokemon_id}}.png"></td>
+                            <td title="'Nome'" sortable="'name'">
+                                {{pokemon.name}}
+                            </td>
+                            <td title="'Expira em'">
+                                <timer-countdown end-time="pokemon.timer" on-finish="vm.endTimePokemon(pokemon, $index)"></timer-countdown>
+                            </td>
+                            <td title="'IV'" sortable="'iv'" class="text-center">
+                                <span data-ng-if="pokemon.iv == -1">-</span>
+                                <span data-ng-if="pokemon.iv > -1">{{pokemon.iv | number:2}}%</span>
+                            </td>
+                            <td title="'Endereço'" filter="{ address: 'text'}" sortable="'address'">
+                                <a class="btn btn-link" href="https://www.google.com/maps/?daddr={{pokemon.lat}},{{pokemon.lon}}" target="_blank">{{pokemon.address}}</a></td>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

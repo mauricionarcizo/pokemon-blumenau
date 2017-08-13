@@ -4,13 +4,14 @@
         'ui.bootstrap',
         'ngResource',
         'ngAnimate',
-        'timer',
         'ngTable',
         'ngSanitize',
-        'ngTouch']);
+        'ngTouch',
+        'TimerCountdown',
+        'ui.utils.masks']);
 
     app.factory('PokemonService', function ($resource) {
-        return $resource('http://localhost:8080/rest/pokemon');
+        return $resource('/rest/pokemon');
     });
 
     app.factory('GoogleMapsAddressService', function ($resource) {
@@ -29,6 +30,20 @@
         vm.selectListPokemon = selectListPokemon;
         vm.selectFilterPokemon = selectFilterPokemon;
 
+        init();
+
+        function init() {
+            createListPokemonFilter();
+        }
+
+        function createListPokemonFilter() {
+            if (!localStorage.getItem('pokemon-1')) {
+                for (var id = 1; id <= 251; id++) {
+                    localStorage.setItem('pokemon-' + id, angular.toJson({ id: id, show: false, ivMin: 80 }));
+                }
+            }
+        }
+
         function selectListPokemon() {
             console.log('selectListPokemon')
         }
@@ -36,5 +51,6 @@
         function selectFilterPokemon() {
             console.log('selectFilterPokemon')
         }
+
     }
 })();
