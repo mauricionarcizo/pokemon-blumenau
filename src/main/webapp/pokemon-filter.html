@@ -4,7 +4,7 @@
             <div class="panel-heading">
                 <div class="input-group">
                     <input type="text" data-ng-model="filterPokemon" name="filterPokemon" placeholder="Pesquisar pokemon" class="form-control">
-                    <div class="input-group-addon" data-ng-click="filterPokemon = null"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>
+                    <div class="input-group-addon" data-ng-click="filterPokemon = undefined"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>
                 </div>
             </div>
             <div class="panel-body" style="max-height: 800px; overflow-y: auto;">
@@ -42,12 +42,12 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <img class="pull-left" data-ng-src="./img/{{pokemon.id}}.png" style="margin-right:5px;">
                         <label class="checkbox-inline">
-                            <input type="checkbox" data-ng-model="pokemon.show" data-ng-change="vm.configPokemonChange(pokemon)"> ou
+                            <input type="checkbox" data-ng-model="pokemon.show" data-ng-click="vm.configPokemonChange(pokemon)"> ou
                         </label>
                         <div class="form-group" style="display: inline;">
                             <label class="sr-only" for="ivMin">ou</label>
                             <input type="text" style="width: 90px; display: inline;" data-ng-model="pokemon.ivMin" class="form-control input-sm" id="ivMin"
-                                placeholder="IV mínimo" data-ng-change="vm.configPokemonChange(pokemon)" ui-number-mask="0" min="0"
+                                placeholder="IV mínimo" data-ng-blur="vm.configPokemonChange(pokemon)" ui-number-mask="0" min="0"
                                 max="100">
                         </div>
                     </div>
