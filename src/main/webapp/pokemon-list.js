@@ -43,6 +43,7 @@
                     vm.isLoading = false;
                 })
                 .catch(function () {
+                    vm.nextUpdate = moment().add(60, 's');
                     vm.error = 'Não foi possível obter os dados dos Pokemon.';
                     vm.isLoading = false;
                 });

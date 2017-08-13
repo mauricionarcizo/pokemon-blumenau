@@ -50,7 +50,6 @@
         }
 
         $ctrl.$onDestroy = function () {
-            console.log('destroy')
             $interval.cancel(interval);
         };
     }
