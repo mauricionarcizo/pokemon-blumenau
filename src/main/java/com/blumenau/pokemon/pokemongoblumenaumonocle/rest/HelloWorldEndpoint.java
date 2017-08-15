@@ -28,7 +28,7 @@ import javax.ws.rs.QueryParam;
 
 @Path("/pokemon")
 public class HelloWorldEndpoint {
-	private String urlServer = "http://158.69.250.59:5555/data";
+	private String urlServer = "http://blumenau.mapapokemon.club/data";
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response doGet(@QueryParam("lastId") String lastId) throws Exception{
@@ -36,6 +36,7 @@ public class HelloWorldEndpoint {
 		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
             HttpGet request = new HttpGet(urlServer);
             request.addHeader("content-type", "application/json");
+            request.setHeader("Authorization", "Basic Ymx1bWVuYXU6Q2h1cDRmNGsz");
             HttpResponse result = httpClient.execute(request);
             String json = EntityUtils.toString(result.getEntity(), "UTF-8");
 

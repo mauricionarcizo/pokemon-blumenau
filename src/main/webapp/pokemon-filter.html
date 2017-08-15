@@ -7,7 +7,7 @@
                     <div class="input-group-addon" data-ng-click="filterPokemon = undefined"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>
                 </div>
             </div>
-            <div class="panel-body" style="max-height: 800px; overflow-y: auto;">
+            <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <a class="btn btn-link" data-ng-click="vm.showAllPokemon(true)">Habilitar todos</a>|<a class="btn btn-link"
@@ -40,7 +40,8 @@
                 </div>
                 <div data-ng-repeat="pokemon in vm.listPokemon | filter: filterPokemon" class="row" style=" margin-bottom: 8px">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <img class="pull-left" data-ng-src="./img/{{pokemon.id}}.png" style="margin-right:5px;">
+                        <!-- <img class="pull-left" data-ng-src="./img/{{pokemon.id}}.png" style="margin-right:5px;"> -->
+                        <span style="margin-right:5px;">{{pokemon.name}}</span>
                         <label class="checkbox-inline">
                             <input type="checkbox" data-ng-model="pokemon.show" data-ng-click="vm.configPokemonChange(pokemon)"> ou
                         </label>
