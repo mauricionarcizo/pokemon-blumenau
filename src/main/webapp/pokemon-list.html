@@ -15,9 +15,46 @@
                 <div class="well well-sm">{{vm.error}}</div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" data-ng-show="vm.listPokemon.length">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="table-responsive">
+                <div class="row">
+                    <div class="col-lg-1 col-md-1  col-sm-1 col-xs-2">
+                        Nome
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-3">
+                        Expira
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-3">
+                        IV
+                    </div>
+                    <div class="col-lg-1 col-md-1  col-sm-1 col-xs-3">
+                        CP/Level
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                        Endereço
+                    </div>
+                </div>
+                <div class="row" data-ng-repeat="pokemon in vm.listPokemon | orderBy: ['-iv', '-cp', '-level', 'name']">
+                    <div class="col-lg-1 col-md-1  col-sm-1 col-xs-2">
+                        <img class="leaflet-marker-icon" data-ng-src="./img/{{pokemon.pokemon_id}}.png">
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-3">
+                        <timer-countdown end-time="pokemon.timer" on-finish="vm.endTimePokemon(pokemon, $index)"></timer-countdown>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-3">
+                        <span data-ng-if="pokemon.iv == -1">-</span>
+                        <span data-ng-if="pokemon.iv > -1">{{pokemon.iv | number:2}}%</span>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-3">
+                        {{pokemon.cp}}/{{pokemon.level}}
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                        <a class="btn btn-link" href="https://www.google.com/maps/?daddr={{pokemon.lat}},{{pokemon.lon}}" target="_blank">{{pokemon.address}}</a></td>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="border-bottom: #cac4c4 solid 1px; margin-bottom:10px;">
+                    </div>
+                </div>
+                <!-- <div class="table-responsive">
                     <table data-ng-table="vm.tableParams" show-filter="true" class="table table-bordered table-hover table-striped table-condensed">
                         <tr data-ng-repeat="pokemon in $data">
                             <td><img class="leaflet-marker-icon" data-ng-src="./img/{{pokemon.pokemon_id}}.png"></td>
@@ -36,7 +73,7 @@
                             </td>
                         </tr>
                     </table>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

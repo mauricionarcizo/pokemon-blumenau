@@ -36,7 +36,7 @@ public class HelloWorldEndpoint {
 		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
             HttpGet request = new HttpGet(urlServer);
             request.addHeader("content-type", "application/json");
-            request.setHeader("Authorization", "Basic Ymx1bWVuYXU6Q2h1cDRmNGsz");
+            request.setHeader("Authorization", "Basic Ymx1bWVuYXU6TWkyMmZseWdyMzNu");
             HttpResponse result = httpClient.execute(request);
             String json = EntityUtils.toString(result.getEntity(), "UTF-8");
 
@@ -73,5 +73,7 @@ public class HelloWorldEndpoint {
         public String move2;
         public long sta;
         public String address;
+        public long cp;
+        public long level;
     }
 }
