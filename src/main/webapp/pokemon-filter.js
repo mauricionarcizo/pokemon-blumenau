@@ -33,7 +33,7 @@
                 .then(function (data) {
                     vm.listPokemon = [];
                     angular.forEach(data.pokemon, function (pokemon) {
-                        var pokemonSaved = localStorage.getItem('pokemon-' + pokemon.id);
+                        var pokemonSaved = localStorage.getItem('pokemon-bnu-' + pokemon.id);
                         if (pokemonSaved) {
                             pokemon = Object.assign(pokemon, angular.fromJson(pokemonSaved));
                         }
@@ -43,7 +43,7 @@
         }
 
         function configPokemonChange(pokemon) {
-            localStorage.setItem('pokemon-' + pokemon.id, angular.toJson(pokemon));
+            localStorage.setItem('pokemon-bnu-' + pokemon.id, angular.toJson(pokemon));
         }
 
         function showAllPokemon(check) {

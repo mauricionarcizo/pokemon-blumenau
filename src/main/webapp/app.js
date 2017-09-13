@@ -37,9 +37,9 @@
         }
 
         function createListPokemonFilter() {
-            if (!localStorage.getItem('pokemon-1')) {
+            if (!localStorage.getItem('pokemon-bnu-1')) {
                 for (var id = 1; id <= 251; id++) {
-                    localStorage.setItem('pokemon-' + id, angular.toJson({ id: id, show: true, ivMin: 80, lvlMin: 20 }));
+                    localStorage.setItem('pokemon-bnu-' + id, angular.toJson({ id: id, show: true, ivMin: 80, lvlMin: 20 }));
                 }
             }
         }

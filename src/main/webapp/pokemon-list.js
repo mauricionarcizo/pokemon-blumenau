@@ -83,7 +83,7 @@
         }
 
         function showPokemon(pokemon) {
-            var pokemonFilter = angular.fromJson(localStorage.getItem('pokemon-' + pokemon.pokemon_id));
+            var pokemonFilter = angular.fromJson(localStorage.getItem('pokemon-bnu-' + pokemon.pokemon_id));
             if (pokemonFilter) {
                 return pokemonFilter.show && pokemon.iv >= (pokemonFilter.ivMin || 0) && pokemon.level >= (pokemonFilter.lvlMin || 0);
             }
