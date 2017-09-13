@@ -33,6 +33,26 @@
                             </div>
                         </form>
                     </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <form name="lvlMinForm">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-5 col-xs-5">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-sm" data-ng-model="lvlMin" id="lvlMin" placeholder="Lvl mínimo" ui-number-mask="0"
+                                            min="0" max="40" name="lvlMinAll">
+                                        <div data-ng-if="lvlMinForm.lvlMinAll.$invalid">
+                                            <span data-ng-if="lvlMinForm.lvlMinAll.$error.max">Valor máximo para o level é 40</span>
+                                            <span data-ng-if="lvlMinForm.lvlMinAll.$error.min">Valor mínimo para o level é 0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
+                                    <a class="btn btn-link" data-ng-click="vm.setLevelMinAllPokemon(lvlMin); lvlMin = null;" data-ng-disabled="lvlMinForm.lvlMinAll.$invalid">Aplicar a todos</a>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"></div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <div class="row" style="margin-bottom: 10px;">
                     <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">

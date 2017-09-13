@@ -17,6 +17,7 @@
         vm.configPokemonChange = configPokemonChange;
         vm.showAllPokemon = showAllPokemon;
         vm.setIvMinAllPokemon = setIvMinAllPokemon;
+        vm.setLevelMinAllPokemon = setLevelMinAllPokemon;
 
         init();
 
@@ -56,6 +57,13 @@
         function setIvMinAllPokemon(ivMin){
             angular.forEach(vm.listPokemon, function (pokemon) {
                 pokemon.ivMin = ivMin;
+                configPokemonChange(pokemon);
+            });
+        }
+
+        function setLevelMinAllPokemon(lvlMin){
+            angular.forEach(vm.listPokemon, function (pokemon) {
+                pokemon.lvlMin = lvlMin;
                 configPokemonChange(pokemon);
             });
         }
