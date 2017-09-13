@@ -3,7 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="input-group">
-                    <input type="text" data-ng-model="filterPokemon" name="filterPokemon" placeholder="Pesquisar pokemon" class="form-control">
+                    <input type="text" data-ng-model="filterPokemon" name="filterPokemon" placeholder="Pesquisar Pokémon" class="form-control">
                     <div class="input-group-addon" data-ng-click="filterPokemon = undefined"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>
                 </div>
             </div>
@@ -34,23 +34,42 @@
                         </form>
                     </div>
                 </div>
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        Pokémon
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: center;">
+                        Exibir
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        IV Min
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        Level Min
+                    </div>
+                </div>
                 <div class="row" style=" border-bottom: 1px #dcd7d7 solid; margin-bottom: 10px;">
                     <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     </div>
                 </div>
-                <div data-ng-repeat="pokemon in vm.listPokemon | filter: filterPokemon" class="row" style=" margin-bottom: 8px">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <!-- <img class="pull-left" data-ng-src="./img/{{pokemon.id}}.png" style="margin-right:5px;"> -->
+                <div data-ng-repeat="pokemon in vm.listPokemon | filter: {name:filterPokemon}" class="row" style=" margin-bottom: 8px">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         <span style="margin-right:5px;">{{pokemon.name}}</span>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" data-ng-model="pokemon.show" data-ng-click="vm.configPokemonChange(pokemon)"> ou
-                        </label>
-                        <div class="form-group" style="display: inline;">
-                            <label class="sr-only" for="ivMin">ou</label>
-                            <input type="text" style="width: 90px; display: inline;" data-ng-model="pokemon.ivMin" class="form-control input-sm" id="ivMin"
-                                placeholder="IV mínimo" data-ng-blur="vm.configPokemonChange(pokemon)" ui-number-mask="0" min="0"
-                                max="100">
-                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: center;">
+                        <input id="show" type="checkbox" data-ng-model="pokemon.show" data-ng-click="vm.configPokemonChange(pokemon)">
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="text-align: center;">
+                        <input type="text" data-ng-model="pokemon.ivMin" class="form-control input-sm" id="ivMin" placeholder="IV Min" data-ng-blur="vm.configPokemonChange(pokemon)"
+                            ui-number-mask="0" min="0" max="100">
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="text-align: center;">
+                        <input type="text" data-ng-model="pokemon.lvlMin" class="form-control input-sm" id="lvlMin" placeholder="Lvl Min" data-ng-blur="vm.configPokemonChange(pokemon)"
+                            ui-number-mask="0" min="0" max="40">
                     </div>
                 </div>
             </div>

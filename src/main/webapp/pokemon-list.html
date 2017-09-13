@@ -3,6 +3,10 @@
         <p>Próxima atualização em:
             <timer-countdown data-ng-if="!vm.isLoading" end-time="vm.nextUpdate" on-finish="vm.updateListPokemon()"></timer-countdown>
         </p>
+        <div class="input-group">
+            <input type="text" data-ng-model="filterPokemon" name="filterPokemon" placeholder="Pesquisar Pokémon" class="form-control">
+            <div class="input-group-addon" data-ng-click="filterPokemon = undefined"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>
+        </div>
     </div>
     <div class="panel-body">
         <div class="row" data-ng-if="vm.isLoading">
@@ -15,65 +19,60 @@
                 <div class="well well-sm">{{vm.error}}</div>
             </div>
         </div>
+        <div class="row" data-ng-if="!vm.isLoading && !vm.listPokemon.length">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                Nenhum pokemon encontrado. Verifique os filtros utilizados.
+            </div>
+        </div>
         <div class="row" data-ng-show="vm.listPokemon.length">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="row" style="    background: white; position: sticky; position: -webkit-sticky; top: -1px; z-index: 10000;">
-                    <div class="col-lg-1 col-md-1  col-sm-1 col-xs-2">
-                        Nome
+                <div class="row" style="background: white; position: sticky; position: -webkit-sticky; top: -1px; z-index: 10000; margin-bottom:10px;">
+                    <div class="col-lg-1 col-md-1  col-sm-1 col-xs-4">
+                        Pokemon
                     </div>
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-3">
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-4">
                         Expira
                     </div>
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-3">
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-4">
                         IV
                     </div>
-                    <div class="col-lg-1 col-md-1  col-sm-1 col-xs-3">
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-4 visible-xs">
+                        <span>&nbsp;</span>
+                    </div>
+                    <div class="col-lg-1 col-md-1  col-sm-1 col-xs-4">
                         CP/Level
                     </div>
-                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                    <div class="col-lg-1 col-md-1  col-sm-1 col-xs-4">
+                        Atk/Def/Sta
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         Endereço
                     </div>
                 </div>
-                <div class="row" data-ng-repeat="pokemon in vm.listPokemon | orderBy: ['-iv', '-cp', '-level', 'name']">
-                    <div class="col-lg-1 col-md-1  col-sm-1 col-xs-2">
-                        <img class="leaflet-marker-icon" data-ng-src="./img/{{pokemon.pokemon_id}}.png">
+                <div class="row" data-ng-repeat="pokemon in vm.listPokemon | orderBy: ['-iv', '-cp', '-level', 'name'] | filter: {name:filterPokemon}">
+                    <div class="col-lg-1 col-md-1  col-sm-1 col-xs-4">
+                        <img class="img-rounded" data-ng-src="./img/{{pokemon.pokemon_id}}.png">
                     </div>
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-3">
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-4">
                         <timer-countdown end-time="pokemon.timer" on-finish="vm.endTimePokemon(pokemon, $index)"></timer-countdown>
                     </div>
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-3">
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-4">
                         <span data-ng-if="pokemon.iv == -1">-</span>
                         <span data-ng-if="pokemon.iv > -1">{{pokemon.iv | number:2}}%</span>
                     </div>
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-3">
-                        {{pokemon.cp}}/{{pokemon.level}}
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-4">
+                        <span>{{pokemon.cp}}/{{pokemon.level}}</span>
+                    </div>
+                    <div class="col-lg-1 col-md-1  col-sm-1 col-xs-4">
+                        <span>{{pokemon.atk}}/{{pokemon.def}}/{{pokemon.sta}}</span>
                     </div>
                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                        <a class="btn btn-link" style="white-space: pre-wrap;" href="https://www.google.com/maps/?daddr={{pokemon.lat}},{{pokemon.lon}}" target="_blank">{{pokemon.address}}</a></td>
+                        <a class="btn btn-link" style="white-space: pre-wrap;" href="https://www.google.com/maps/?daddr={{pokemon.lat}},{{pokemon.lon}}"
+                            target="_blank">{{pokemon.address}}</a></td>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="border-bottom: #cac4c4 solid 1px; margin-bottom:10px;">
                     </div>
                 </div>
-                <!-- <div class="table-responsive">
-                    <table data-ng-table="vm.tableParams" show-filter="true" class="table table-bordered table-hover table-striped table-condensed">
-                        <tr data-ng-repeat="pokemon in $data">
-                            <td><img class="leaflet-marker-icon" data-ng-src="./img/{{pokemon.pokemon_id}}.png"></td>
-                            <td title="'Nome'" sortable="'name'">
-                                {{pokemon.name}}
-                            </td>
-                            <td title="'Expira em'">
-                                <timer-countdown end-time="pokemon.timer" on-finish="vm.endTimePokemon(pokemon, $index)"></timer-countdown>
-                            </td>
-                            <td title="'IV'" sortable="'iv'" class="text-center">
-                                <span data-ng-if="pokemon.iv == -1">-</span>
-                                <span data-ng-if="pokemon.iv > -1">{{pokemon.iv | number:2}}%</span>
-                            </td>
-                            <td title="'Endereço'" filter="{ address: 'text'}" sortable="'address'">
-                                <a class="btn btn-link" href="https://www.google.com/maps/?daddr={{pokemon.lat}},{{pokemon.lon}}" target="_blank">{{pokemon.address}}</a></td>
-                            </td>
-                        </tr>
-                    </table>
-                </div> -->
             </div>
         </div>
     </div>

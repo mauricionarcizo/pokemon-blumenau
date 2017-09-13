@@ -85,7 +85,7 @@
         function showPokemon(pokemon) {
             var pokemonFilter = angular.fromJson(localStorage.getItem('pokemon-' + pokemon.pokemon_id));
             if (pokemonFilter) {
-                return pokemonFilter.show || pokemon.iv >= pokemonFilter.ivMin;
+                return pokemonFilter.show && pokemon.iv >= (pokemonFilter.ivMin || 0) && pokemon.level >= (pokemonFilter.lvlMin || 0);
             }
             return false;
         }
@@ -95,6 +95,7 @@
         }
 
         function loadAddress(pokemon, useKey) {
+            var messageError = 'Não foi possível obter localização exata. Clique para abrir no google maps.'
             var queryParams = { latlng: pokemon.lat + ',' + pokemon.lon };
             if (useKey) {
                 queryParams.key = 'AIzaSyBhArMPqNkrs1kz2k18h5e3rbtGTo9QbsI';
@@ -110,12 +111,12 @@
                             //retry without key
                             loadAddress(pokemon, false);
                         } else {
-                            pokemon.address = 'Não foi possível obter a localização.';
+                            pokemon.address = messageError;
                         }
                     }
                 })
                 .catch(function () {
-                    pokemon.address = 'Não foi possível obter a localização.';
+                    pokemon.address = messageError;
                 });
         }
 

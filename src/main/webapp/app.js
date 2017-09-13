@@ -39,7 +39,7 @@
         function createListPokemonFilter() {
             if (!localStorage.getItem('pokemon-1')) {
                 for (var id = 1; id <= 251; id++) {
-                    localStorage.setItem('pokemon-' + id, angular.toJson({ id: id, show: false, ivMin: 80 }));
+                    localStorage.setItem('pokemon-' + id, angular.toJson({ id: id, show: true, ivMin: 80, lvlMin: 20 }));
                 }
             }
         }
