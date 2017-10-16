@@ -61,10 +61,10 @@
                         <span data-ng-if="pokemon.iv > -1">{{pokemon.iv | number:2}}%</span>
                     </div>
                     <div class="col-lg-1 col-md-1 col-sm-1 col-xs-4">
-                        <span>{{pokemon.cp}}/{{pokemon.level}}</span>
+                        <span>{{pokemon.cp || '-'}}/{{pokemon.level || '-'}}</span>
                     </div>
                     <div class="col-lg-1 col-md-1  col-sm-1 col-xs-4">
-                        <span>{{pokemon.atk}}/{{pokemon.def}}/{{pokemon.sta}}</span>
+                        <span>{{pokemon.atk || '-'}}/{{pokemon.def || '-'}}/{{pokemon.sta || '-'}}</span>
                     </div>
                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                         <a class="btn btn-link" style="white-space: pre-wrap;" href="https://www.google.com/maps/?daddr={{pokemon.lat}},{{pokemon.lon}}"
