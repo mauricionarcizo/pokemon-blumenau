@@ -77,7 +77,7 @@
 
         function calcIVPokemon(atk, def, sta) {
             if (!atk && !def && !sta) {
-                return -1;
+                return 0;
             }
             return (atk + def + sta) * 100 / 45;
         }
