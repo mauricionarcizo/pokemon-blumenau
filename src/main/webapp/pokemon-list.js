@@ -87,6 +87,7 @@
             if (pokemonFilter) {
                 return pokemonFilter.show && (pokemon.iv || 1) >= (pokemonFilter.ivMin || 1) && (pokemon.level || 1) >= (pokemonFilter.lvlMin || 1);
             } else {
+                console.log('pokemon.pokemon_id', pokemon.pokemon_id);
                 localStorage.setItem('pokemon-bnu-' + pokemon.pokemon_id, angular.toJson({ id: pokemon.pokemon_id, name: pokemon.name, show: true, ivMin: 80, lvlMin: 20 }));
             }
             return false;
