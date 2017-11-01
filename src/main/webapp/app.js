@@ -19,7 +19,7 @@
     });
 
     app.factory('PokemonListService', function ($resource) {
-        return $resource('https://gist.githubusercontent.com/mauricionarcizo/69b2272fc199c1171aab47e6176801c6/raw/ac0b52e67d485373015b839345e55aeac384adad/pokemon-go-list.json');
+        return $resource('https://gist.githubusercontent.com/mauricionarcizo/69b2272fc199c1171aab47e6176801c6/raw/d00b9f6a2aab31cdffd9e4423d5c7ad1fff0153a/pokemon-go-list.json');
     });
 
     app.controller('AppController', AppController);
