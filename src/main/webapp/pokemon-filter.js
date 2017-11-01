@@ -38,7 +38,7 @@
                         if (pokemonSaved) {
                             pokemon = Object.assign(pokemon, angular.fromJson(pokemonSaved));
                         } else {
-                            pokemon = { id: id, show: true, ivMin: 80, lvlMin: 20 };
+                            pokemon = { id: pokemon.pokemon_id, show: true, ivMin: 80, lvlMin: 20 };
                             localStorage.setItem('pokemon-bnu-' + id, angular.toJson(pokemon));
                         }
                         vm.listPokemon.push(pokemon);
