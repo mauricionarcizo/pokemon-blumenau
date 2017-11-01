@@ -86,6 +86,8 @@
             var pokemonFilter = angular.fromJson(localStorage.getItem('pokemon-bnu-' + pokemon.pokemon_id));
             if (pokemonFilter) {
                 return pokemonFilter.show && (pokemon.iv || 1) >= (pokemonFilter.ivMin || 1) && (pokemon.level || 1) >= (pokemonFilter.lvlMin || 1);
+            } else {
+                localStorage.setItem('pokemon-bnu-' + id, angular.toJson({ id: pokemon.pokemon_id, show: true, ivMin: 80, lvlMin: 20 }));
             }
             return false;
         }
