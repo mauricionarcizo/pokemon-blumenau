@@ -56,17 +56,17 @@
                     <div class="col-lg-1 col-md-1  col-sm-1 col-xs-4" style="margin-top:10px;">
                         <img class="img-rounded" data-ng-src="./img/{{pokemon.pokemon_id}}.png">
                     </div>
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-4">
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-4" style="margin-top:10px;">
                         <timer-countdown end-time="pokemon.timer" on-finish="vm.endTimePokemon(pokemon, $index)"></timer-countdown>
                     </div>
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-4">
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-4" style="margin-top:10px;">
                         <span data-ng-if="pokemon.iv == -1">-</span>
                         <span data-ng-if="pokemon.iv > -1">{{pokemon.iv | number:2}}%</span>
                     </div>
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-4">
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-4" style="margin-top:10px;">
                         <span>{{pokemon.cp || '-'}}/{{pokemon.level || '-'}}</span>
                     </div>
-                    <div class="col-lg-1 col-md-1  col-sm-1 col-xs-4">
+                    <div class="col-lg-1 col-md-1  col-sm-1 col-xs-4" style="margin-top:10px;">
                         <span>{{!!pokemon.atk ? pokemon.atk : '-'}}/{{!!pokemon.def ? pokemon.def : '-'}}/{{!!pokemon.sta ? pokemon.sta
                             : '-'}}</span>
                     </div>
@@ -75,8 +75,6 @@
                             target="_blank">{{pokemon.address}}</a>
                         </td>
                     </div>
-                    <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="border-bottom: #cac4c4 solid 1px; margin-bottom:10px;">
-                    </div> -->
                 </div>
             </div>
         </div>
