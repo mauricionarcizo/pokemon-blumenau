@@ -19,7 +19,7 @@
     });
 
     app.factory('OpenStreetMapAddressService', function ($resource) {
-        return $resource('http://nominatim.openstreetmap.org/reverse?format=json&addressdetails=1');
+        return $resource('https://nominatim.openstreetmap.org/reverse?format=json&addressdetails=1');
     });
 
     app.factory('PokemonListService', function ($resource) {
