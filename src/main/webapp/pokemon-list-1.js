@@ -14,6 +14,7 @@
         var PokemonService = $injector.get('PokemonService');
         var GoogleMapsAddressService = $injector.get('GoogleMapsAddressService');
         var NgTableParams = $injector.get('NgTableParams');
+        var OpenStreetMapAddressService = $injector.get('OpenStreetMapAddressService');
         var lastId = 0;
         vm.listPokemon = [];
         vm.endTimePokemon = endTimePokemon;
@@ -106,6 +107,7 @@
         function loadAddress(pokemon, useKey) {
             var messageError = 'Não foi possível obter localização exata. Clique para abrir no google maps.'
             var queryParams = { latlng: pokemon.lat + ',' + pokemon.lon };
+
             if (useKey) {
                 queryParams.key = 'AIzaSyBhArMPqNkrs1kz2k18h5e3rbtGTo9QbsI';
             }
@@ -120,9 +122,25 @@
                             //retry without key
                             loadAddress(pokemon, false);
                         } else {
-                            pokemon.address = messageError;
+                            if (!useKey) {
+                                loadAddressOpenStreetMap(pokemon);
+                            }
                         }
                     }
+                })
+                .catch(function () {
+                    pokemon.address = messageError;
+                });
+        }
+
+        function loadAddressOpenStreetMap(pokemon) {
+            var queryParams = { lat: pokemon.lat, lon: pokemon.lon };
+            return OpenStreetMapAddressService.get(queryParams)
+                .$promise.then(function (addresses) {
+                    var road = addresses.address.road;
+                    var suburb = addresses.address.suburb;
+                    var city = addresses.address.city;
+                    pokemon.address = (road || '') + ', ' + (suburb || '') + ', ' + (city || '');
                 })
                 .catch(function () {
                     pokemon.address = messageError;

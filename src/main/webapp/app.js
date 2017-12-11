@@ -18,6 +18,10 @@
         return $resource('https://maps.googleapis.com/maps/api/geocode/json');
     });
 
+    app.factory('OpenStreetMapAddressService', function ($resource) {
+        return $resource('http://nominatim.openstreetmap.org/reverse?format=json&addressdetails=1');
+    });
+
     app.factory('PokemonListService', function ($resource) {
         return $resource('https://gist.githubusercontent.com/mauricionarcizo/01da48654bd10a440b6c3189656557ff/raw/0ff07312a291a7b717921d273e6f2a839ab9a5f3/pokemon-go-list.min.json');
     });
