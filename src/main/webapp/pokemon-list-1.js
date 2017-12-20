@@ -97,6 +97,7 @@
                 return true;
             } else if (pokemon.pokemon_id == 201) {
                 pokemon.priority = 1;
+                return true;
             }
         }
 
