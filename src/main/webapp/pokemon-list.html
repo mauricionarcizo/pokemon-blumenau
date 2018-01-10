@@ -54,7 +54,7 @@
                 <div class="row" data-ng-class="{'bg-danger': pokemon.priority}" style="border-bottom: #cac4c4 solid 1px;"
                     data-ng-repeat="pokemon in vm.listPokemon | orderBy: ['priority','-iv', '-cp', '-level', 'name'] | filter: {name:filterPokemon}">
                     <div class="col-lg-1 col-md-1  col-sm-1 col-xs-4" style="margin-top:10px;">
-                        <img class="img-rounded img-responsive" alt="{{pokemon.name}}" data-ng-src="./img/{{pokemon.pokemon_id}}.png">
+                        <img class="img-rounded img-responsive" alt="{{pokemon.name}}" title="{{pokemon.name}}" data-ng-src="./img/{{pokemon.pokemon_id}}.png">
                     </div>
                     <div class="col-lg-1 col-md-1 col-sm-1 col-xs-4" style="margin-top:10px;">
                         <timer-countdown end-time="pokemon.timer" on-finish="vm.endTimePokemon(pokemon, $index)"></timer-countdown>
