@@ -79,7 +79,7 @@
                 <div data-ng-repeat="pokemon in vm.listPokemon | filter: {name:filterPokemon}" class="row" style=" margin-bottom: 8px">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         <!--<span style="margin-right:5px;">{{pokemon.name}}</span>-->
-                        <img class="img-rounded img-responsive" alt="{{pokemon.name}}" title="{{pokemon.name}}"  data-ng-src="https://raw.githubusercontent.com/ZeChrales/monocle-icons/larger-outlined/icons/{{pokemon.pokemon_id}}.png">
+                        <img class="img-rounded img-responsive" alt="{{pokemon.name}}" title="{{pokemon.name}}"  data-ng-src="https://raw.githubusercontent.com/ZeChrales/monocle-icons/larger-outlined/icons/{{pokemon.id}}.png">
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: center;">
                         <input id="show" type="checkbox" data-ng-model="pokemon.show" data-ng-click="vm.configPokemonChange(pokemon)">
